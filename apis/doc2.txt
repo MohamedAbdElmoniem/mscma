@@ -1,0 +1,68 @@
+var DoctorModel = require("../models/Citizen/doctors");
+var CitizenModel = require("../models/Citizen/citizens");
+var mongoose = require("mongoose");
+
+function DoctorAPIS(app) {
+  app.get("/getalldoctor", async (req, resp) => {
+    var doctors = await DoctorModel.find({}); // async
+    resp.json(doctors);
+  });
+
+  app.post("/savedoctor", async (req, resp) => {
+    try {
+      let name = req.body.name;
+      let specialization = req.body.specialization;
+      let age = req.body.age;
+
+      let doctor = new DoctorModel({
+        _id: mongoose.Types.ObjectId(),
+        name: name,
+        specialization: specialization,
+        age: age
+      });
+
+      await doctor.save(); // async
+      resp.json({ message: "success" });
+    } catch (e) {
+      resp.json(e);
+    }
+  });
+
+  app.post("/getdoctorbyname", async (req, resp) => {
+    let name = req.body.name;
+    let doctor = await DoctorModel.findOne({ name: name });
+    resp.json(doctor);
+  });
+
+  app.get("/getdoctorscount", async (req, resp) => {
+    let count = await DoctorModel.count();
+    resp.json({ count: count });
+  });
+
+  app.post("/removedoctor", async (req, resp) => {
+    let doctorId = req.body.id;
+    await DoctorModel.remove({ _id: doctorId });
+    resp.json({ message: "deleted" });
+  });
+
+  app.post("/updatedoctorname", async (req, resp) => {
+    let doctorId = req.body.id;
+    let newName = req.body.name;
+    let spec = req.body.specialization;
+
+    await DoctorModel.findOneAndUpdate(
+      { _id: doctorId },
+      { name: newName, specialization: spec }
+    );
+    resp.json({ message: "updated" });
+  });
+
+
+  app.get("/getdoctornames",async(req,resp)=>{
+      let doctors = await DoctorModel.find({}).select("name age")
+      resp.json(doctors)
+
+  })
+}
+
+module.exports = DoctorAPIS;
