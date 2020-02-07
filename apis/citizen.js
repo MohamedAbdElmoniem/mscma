@@ -22,7 +22,7 @@ function CitizenAPIS(app) {
 
   /////////////////////////////////////////////////////////
 
-  app.get("/getallcitizens", Utils.Authentication, async (req, resp) => {
+  app.post("/getallcitizens", Utils.Authentication, async (req, resp) => {
     var citizens = await CitizenModel.find({}); // async
     resp.json(citizens);
   });
