@@ -14,8 +14,7 @@ var cors = require('cors')
 var session = require('express-session')
 var uuid = require("uuid/v4")
 
-//hello i'm menna :D
-//hello i'm moniem :D
+// convert buffer data to json object with post requrests
 app.use(express.json())
 app.use(session({ secret: "mysecret", genid: uuid }))
 app.use(cors({
@@ -49,4 +48,4 @@ app.get("/users", (req, resp) => {
   ]);
 });
 
-app.listen(3000); // create node server
+app.listen(process.env.PORT); // create node server
