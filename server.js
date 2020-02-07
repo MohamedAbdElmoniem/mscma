@@ -14,7 +14,6 @@ var cors = require('cors')
 var session = require('express-session')
 var uuid = require("uuid/v4")
 
-// convert buffer data to json object with post requrests
 app.use(express.json())
 app.use(session({ secret: "mysecret", genid: uuid }))
 app.use(cors({
