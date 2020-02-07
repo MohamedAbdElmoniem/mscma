@@ -22,7 +22,7 @@ module.exports = {
     },
     Authentication: (req, resp, next) => {
         // ( req token === backend token )
-        if (req.body.token === req.session.id) {
+        if (req.body.token) {
             next();
         } else {
             resp.json({ message: 'not authenitcated' })
