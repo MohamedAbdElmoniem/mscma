@@ -14,6 +14,7 @@ var cors = require('cors')
 var session = require('express-session')
 var uuid = require("uuid/v4")
 
+//hello i'm menna :D
 app.use(express.json())
 app.use(session({ secret: "mysecret", genid: uuid }))
 app.use(cors({
